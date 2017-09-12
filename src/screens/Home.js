@@ -3,23 +3,28 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { UserPicker } from './../components'
+import { UserPicker, Calendar, Toolbar } from './../components'
 
 import {
-  StyleSheet,
-  Text,
   View,
-  Picker
+  Picker,
+  ToolbarAndroid
 } from 'react-native'
 
 import * as usersActions from './../actions/users-actions'
+import * as layoutActions from './../actions/layout-actions'
 
 @connect(
   (s, p) => ({
     users: s.users,
+    selectedUserId: s.layout.get('selectedUserId'),
+    activeYear: s.layout.get('activeYear'),
+    activeMonth: s.layout.get('activeMonth'),
+    selectedWeek: s.layout.get('selectedWeek'),
   }),
   d => ({
     usersActions: bindActionCreators(usersActions, d),
+    layoutActions: bindActionCreators(layoutActions, d),
   })
 )
 
@@ -27,51 +32,36 @@ export default class Home extends Component {
   static propTypes = {
     users: PropTypes.object.isRequired,
     usersActions: PropTypes.object.isRequired,
+    layoutActions: PropTypes.object.isRequired,
+    activeYear: PropTypes.number.isRequired,
+    activeMonth: PropTypes.number.isRequired,
+    selectedWeek: PropTypes.number.isRequired,
   }
 
   componentDidMount() {
     this.props.usersActions.fetch()
   }
 
-  onUserChange = (p = this.props) => user => {
+  onUserChange = (p = this.props) => id => p.layoutActions.selectActiveUser({id})
 
-  }
+  onWeekChange = (p = this.props) => id => console.log(id)
+
+  onDateChange = (p = this.props) => date => p.layoutActions.setDate(date)
 
   render() {
-    const { users } = this.props
+    const { users, selectedUserId, activeYear, activeMonth, selectedWeek } = this.props
     return (
-      <View style={styles.container}>
-        <UserPicker users={users} selectedUserId={null} onChange={this.onUserChange()}/>
-        <Text style={styles.welcome}>
-          {this.props.users.size}
-          {process.env.API_URL}
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.jsdd12
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+      <View>
+        <Toolbar/>
+        <UserPicker users={users} selectedUserId={selectedUserId} onChange={this.onUserChange()}/>
+        <Calendar
+          onClick={this.onWeekChange}
+          activeYear={activeYear}
+          activeMonth={activeMonth}
+          selectedWeek={selectedWeek}
+          onDateChange={this.onDateChange()}
+        />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
