@@ -8,7 +8,7 @@ const initialState = Map({
   selectedUserId: null,
   activeYear: moment().year(),
   activeMonth: moment().month(),
-  selectedWeek: moment().weekYear(),
+  selectedWeek: moment().week(),
 })
 
 export default handleActions({
@@ -17,5 +17,6 @@ export default handleActions({
     activeYear: a.payload.year,
     activeMonth: a.payload.month,
     selectedWeek: a.payload.week,
-  })
+  }),
+  [c.SET_WEEK]: (s, a) => s.set('selectedWeek', a.payload.week)
 }, initialState)

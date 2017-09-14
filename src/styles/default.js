@@ -1,3 +1,4 @@
 export default {
-  monthSelectorBg: 'silver'
+  monthSelectorBg: 'silver',
+  yellow: 'rgb(240, 210, 79)'
 }

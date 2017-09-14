@@ -18,7 +18,7 @@ export default OrderedMap({
         "email": "user_3@example.com"
     },
   ],
-  "weeks": [
+  'weeks': [
     {
         "week_number": 18,
         "week_id": 274,

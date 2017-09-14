@@ -19,7 +19,8 @@
 		"redux-actions": "^2.2.1",
 		"redux-promise-middleware": "^4.4.1",
 		"redux-saga": "^0.15.6",
-		"redux-thunk": "^2.2.0"
+		"redux-thunk": "^2.2.0",
+		"reselect": "^3.0.1"
 	},
 	"devDependencies": {
 		"babel-jest": "21.0.2",

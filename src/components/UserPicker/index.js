@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Text,
   View,
   Picker
 } from 'react-native'
@@ -19,7 +18,6 @@ export default class UserPicker extends Component {
     const { selectedUserId, onChange, users } = this.props
     return (
       <View style={styles.container}>
-        <Text style={styles.label}>{'Select user'}</Text>
         <Picker selectedValue={selectedUserId} onValueChange={onChange}>
           {users.map((u, key) => (
             <Picker.Item label={`${u.username} - ${u.email}`} value={u.id} key={key}/>

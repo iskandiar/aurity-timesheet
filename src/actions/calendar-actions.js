@@ -13,10 +13,10 @@ export const fetch = p => async (d, getState) => {
   const userId = state.layout.get('selectedUserId')
   let weeks
   if (!env.API_URL) {
-    weeks = offline.get('calendar')
+    weeks = offline.get('weeks')
   } else {
-    const result = await get(`${env.API_URL}/training/weeks/${month}/${year}/${userId}`)
-    weeks = result.data.weeks
+    const result = await get(`${env.API_URL}/training/weeks/${(month + 1)}/${year}/${userId}`)
+    weeks = result.data.data.weeks
   }
-  d(createAction(c.FETCH_MONTH)({id: userId, year, weeks}))
+  d(createAction(c.FETCH_MONTH)({id: userId, year, weeks, month}))
 }
